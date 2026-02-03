@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>San Valentino 💘</title>
+
+  <style>
+    :root{
+      --pink:#ff3b6b;
+      --pink2:#ff7a95;
+      --bg1:#ffe3ea;
+      --bg2:#ffd0dc;
+      --card:#ffffff;
+      --shadow: 0 18px 45px rgba(0,0,0,.14);
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+      background: radial-gradient(1200px 800px at 50% 10%, #fff 0%, var(--bg1) 45%, var(--bg2) 100%);
+    }
+
+    /* Background animato: cuori che fluttuano */
+    .hearts {
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .heart{
+      position:absolute;
+      bottom:-80px;
+      font-size: clamp(18px, 3.8vw, 32px);
+      opacity:.22;
+      filter: blur(.1px);
+      animation: floatUp linear infinite;
+      transform: translateX(0) rotate(0deg);
+    }
+    @keyframes floatUp{
+      0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity:.00; }
+      10%  { opacity:.22; }
+      100% { transform: translateY(-120vh) translateX(60px) rotate(20deg); opacity:.00; }
+    }
+
+    /* Card */
+    .card{
+      width:min(92vw, 420px);
+      background: var(--card);
+      border-radius: 22px;
+      padding: 26px 18px 22px;
+      box-shadow: var(--shadow);
+      text-align:center;
+      position:relative;
+    }
+
+    .cat{
+      font-size: 64px;
+      line-height: 1;
+      animation: popIn .7s ease both;
+      margin-top: 2px;
+    }
+
+    @keyframes popIn{
+      from { transform: scale(.7); opacity:0; }
+      to   { transform: scale(1); opacity:1; }
+    }
+
+    h1{
+      margin: 10px 0 10px;
+      font-size: clamp(28px, 6.2vw, 40px);
+      letter-spacing: -0.4px;
+    }
+
+    .sub{
+      margin: 0 0 16px;
+      font-size: clamp(16px, 3.8vw, 18px);
+      opacity:.78;
+    }
+
+    .row{
+      display:flex;
+      justify-content:center;
+      gap:14px;
+      margin-top: 10px;
+      position:relative;
+      min-height:70px;
+    }
+
+    button{
+      border:none;
+      border-radius: 16px;
+      padding: 14px 22px;
+      font-size: clamp(20px, 5vw, 24px);
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 10px 24px rgba(0,0,0,.10);
+      transition: transform .12s ease;
+    }
+    button:active{ transform: scale(.98); }
+
+    #yes{
+      background: linear-gradient(135deg, var(--pink) 0%, var(--pink2) 100%);
+      color:#fff;
+      min-width: 150px;
+    }
+
+    #no{
+      background:#e9e9e9;
+      color:#222;
+      position:absolute;
+      left: 240px;
+      top: 200px;
+      min-width: 110px;
+      box-shadow: 0 8px 18px rgba(0,0,0,.10);
+    }
+
+    .toast{
+      margin-top: 14px;
+      font-size: clamp(16px, 4vw, 18px);
+      min-height: 22px;
+      color:#222;
+    }
+
+    /* piccola animazione testo domanda */
+    .shine{
+      background: linear-gradient(90deg, #111 0%, #111 40%, #ff3b6b 55%, #111 70%, #111 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      background-size: 220% 100%;
+      animation: shine 2.6s ease-in-out infinite;
+    }
+    @keyframes shine{
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    /* Schermata finale */
+    .final{
+      height:100vh;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding: 24px;
+    }
+    .finalCard{
+      width:min(92vw, 520px);
+      background: rgba(255,255,255,.9);
+      border-radius: 24px;
+      padding: 28px 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(6px);
+    }
+    .finalEmoji{
+      font-size: 72px;
+      animation: heartPop 1.1s ease both;
+    }
+    @keyframes heartPop{
+      0% { transform: scale(.6) rotate(-6deg); opacity:0; }
+      60%{ transform: scale(1.06) rotate(3deg); opacity:1; }
+      100%{ transform: scale(1) rotate(0deg); }
+    }
+    .finalTitle{
+      margin: 10px 0 8px;
+      font-size: clamp(28px, 6vw, 44px);
+      color: var(--pink);
+      letter-spacing: -0.4px;
+    }
+    .finalText{
+      margin: 0 0 14px;
+      font-size: clamp(18px, 4.6vw, 22px);
+      color:#111;
+    }
+    .finalSmall{
+      margin:0;
+      font-size: 16px;
+      opacity:.8;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- sfondo cuori animati -->
+  <div class="hearts" id="hearts"></div>
+
+  <div class="card" id="card">
+    <div class="cat">🐱</div>
+    <h1 class="shine" id="q">Ciao Licia, do you want to be my valentine???? 💘</h1>
+    <p class="sub">Scegli con calma… (il tasto “No” è un po’ timido 😈)</p>
+
+    <div class="row">
+      <button id="yes">Sì</button>
+      <button id="no" aria-label="No">No</button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <script>
+    // === BACKGROUND HEARTS (animazione) ===
+    const heartsEl = document.getElementById("hearts");
+    const heartChars = ["💗","💖","💘","💞","💕","❤️"];
+    const HEART_COUNT = 18;
+
+    function spawnHeart(i){
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.textContent = heartChars[Math.floor(Math.random()*heartChars.length)];
+      h.style.left = (Math.random()*100) + "vw";
+      h.style.animationDuration = (6 + Math.random()*7) + "s";
+      h.style.animationDelay = (Math.random()*-10) + "s";
+      h.style.opacity = (0.12 + Math.random()*0.18).toFixed(2);
+      h.style.fontSize = (18 + Math.random()*18) + "px";
+      heartsEl.appendChild(h);
+    }
+    for(let i=0;i<HEART_COUNT;i++) spawnHeart(i);
+
+    // === LOGICA "NO CHE SCAPPA" ===
+    const card = document.getElementById("card");
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const toast = document.getElementById("toast");
+
+    const messages = [
+      "No? Davvero davvero? 😏",
+      "Attenta… stai per perdere qualcosa di bello 🔥",
+      "Mmm… ripensaci 😇",
+      "Quel dito sta andando nel verso sbagliato 👀",
+      "Spoiler: il premio è molto interessante 😉"
+    ];
+
+    function randomMsg(){
+      toast.textContent = messages[Math.floor(Math.random() * messages.length)];
+    }
+
+    function moveNoButton(touchX=null, touchY=null){
+      const rect = card.getBoundingClientRect();
+      const padding = 12;
+
+      const maxX = rect.width - noBtn.offsetWidth - padding;
+      const maxY = rect.height - noBtn.offsetHeight - padding;
+
+      let x = Math.random() * maxX + padding;
+      let y = Math.random() * maxY + padding;
+
+      if(touchX !== null && touchY !== null){
+        const localX = touchX - rect.left;
+        const localY = touchY - rect.top;
+
+        const dx = (localX < rect.width/2) ? 1 : -1;
+        const dy = (localY < rect.height/2) ? 1 : -1;
+
+        x = Math.min(maxX, Math.max(padding, localX + dx*(90 + Math.random()*70)));
+        y = Math.min(maxY, Math.max(padding, localY + dy*(90 + Math.random()*70)));
+      }
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top  = y + "px";
+    }
+
+    // telefono: appena prova a toccare "No"
+    noBtn.addEventListener("touchstart", (e)=>{
+      e.preventDefault();
+      randomMsg();
+      const t = e.touches[0];
+      moveNoButton(t.clientX, t.clientY);
+    }, { passive:false });
+
+    // dito che si avvicina -> scappa
+    card.addEventListener("touchmove", (e)=>{
+      const t = e.touches[0];
+      const r = noBtn.getBoundingClientRect();
+      const near =
+        t.clientX > r.left - 34 && t.clientX < r.right + 34 &&
+        t.clientY > r.top - 34 && t.clientY < r.bottom + 34;
+
+      if(near){
+        randomMsg();
+        moveNoButton(t.clientX, t.clientY);
+      }
+    }, { passive:true });
+
+    // fallback PC
+    noBtn.addEventListener("mouseover", ()=>{
+      randomMsg();
+      moveNoButton();
+    });
+
+    // posizionamento iniziale
+    window.addEventListener("load", ()=> moveNoButton());
+    window.addEventListener("resize", ()=> moveNoButton());
+
+    // === CLICK "SÌ" (finale con 😻) ===
+    yesBtn.addEventListener("click", ()=>{
+      document.body.innerHTML = `
+        <div class="hearts" id="hearts2"></div>
+        <div class="final">
+          <div class="finalCard">
+            <div class="finalEmoji">😻💘</div>
+            <h1 class="finalTitle">Brava Licia… scelta perfetta 😌</h1>
+            <p class="finalText">
+              Hai appena vinto: <br>
+              🍫 qualcosa di dolce <br>
+              🍷 qualcosa di buono <br>
+              🔥 e qualcosa che… scopriremo dopo 😉
+            </p>
+            <p class="finalSmall">(PS: il tasto “No” oggi era in modalità “fuga” 😇)</p>
+          </div>
+        </div>
+      `;
+
+      // ricrea cuori anche nella schermata finale
+      const h2 = document.getElementById("hearts2");
+      const heartChars2 = ["💗","💖","💘","💞","💕","❤️"];
+      for(let i=0;i<22;i++){
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.textContent = heartChars2[Math.floor(Math.random()*heartChars2.length)];
+        h.style.left = (Math.random()*100) + "vw";
+        h.style.animationDuration = (6 + Math.random()*7) + "s";
+        h.style.animationDelay = (Math.random()*-10) + "s";
+        h.style.opacity = (0.12 + Math.random()*0.18).toFixed(2);
+        h.style.fontSize = (18 + Math.random()*22) + "px";
+        h2.appendChild(h);
+      }
+    });
+  </script>
+</body>
+</html>
