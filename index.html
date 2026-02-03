@@ -242,43 +242,55 @@
       toast.textContent = messages[Math.floor(Math.random() * messages.length)];
     }
 
-    function moveNoButton() {
-      const cardRect = card.getBoundingClientRect();
-    
-      // Margini di sicurezza (così non esce mai)
-      const padding = 20;
-    
-      const maxX = cardRect.width - noBtn.offsetWidth - padding;
-      const maxY = cardRect.height - noBtn.offsetHeight - padding;
-    
-      const minX = padding;
-      const minY = padding + 80; // evita che salga troppo vicino al titolo
-    
-      const x = Math.random() * (maxX - minX) + minX;
-      const y = Math.random() * (maxY - minY) + minY;
-    
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
-    }
+    function moveNoButton(touchX=null, touchY=null){
+      const rect = card.getBoundingClientRect();
+      const padding = 12;
 
+      const maxX = rect.width - noBtn.offsetWidth - padding;
+      const maxY = rect.height - noBtn.offsetHeight - padding;
+
+      let x = Math.random() * maxX + padding;
+      let y = Math.random() * maxY + padding;
+
+      if(touchX !== null && touchY !== null){
+        const localX = touchX - rect.left;
+        const localY = touchY - rect.top;
+
+        const dx = (localX < rect.width/2) ? 1 : -1;
+        const dy = (localY < rect.height/2) ? 1 : -1;
+
+        x = Math.min(maxX, Math.max(padding, localX + dx*(90 + Math.random()*70)));
+        y = Math.min(maxY, Math.max(padding, localY + dy*(90 + Math.random()*70)));
+      }
 
       noBtn.style.left = x + "px";
       noBtn.style.top  = y + "px";
     }
 
     // telefono: appena prova a toccare "No"
-    noBtn.addEventListener("touchstart", (e) => {
+    noBtn.addEventListener("touchstart", (e)=>{
       e.preventDefault();
       randomMsg();
-      moveNoButton();
-    }, { passive: false });
-    
       const t = e.touches[0];
       moveNoButton(t.clientX, t.clientY);
     }, { passive:false });
 
+    // dito che si avvicina -> scappa
+    card.addEventListener("touchmove", (e)=>{
+      const t = e.touches[0];
+      const r = noBtn.getBoundingClientRect();
+      const near =
+        t.clientX > r.left - 34 && t.clientX < r.right + 34 &&
+        t.clientY > r.top - 34 && t.clientY < r.bottom + 34;
+
+      if(near){
+        randomMsg();
+        moveNoButton(t.clientX, t.clientY);
+      }
+    }, { passive:true });
+
     // fallback PC
-    noBtn.addEventListener("mouseover", () => {
+    noBtn.addEventListener("mouseover", ()=>{
       randomMsg();
       moveNoButton();
     });
